@@ -1,8 +1,64 @@
 import { useState, useEffect } from 'react';
 import { searchGithub, searchGithubUser } from '../api/API';
+import Candidate from '../interfaces/Candidate.interface';
+import CandidateCard from '../components/CandidateCard';
+
+
 
 const CandidateSearch = () => {
-  return <h1>CandidateSearch</h1>;
+  console.log('GitHub Token:', import.meta.env.VITE_GITHUB_TOKEN);
+  const [candidates, setCandidates] = useState<Candidate[]>([]);
+
+  useEffect(() => {
+    const fetchCandidates = async () => {
+      const data = await searchGithub();
+      const userInfo = await data.map((candidate: { login: string }) => searchGithubUser(candidate.login));
+      console.log('User Info:', userInfo);
+      const user = await Promise.all(userInfo);
+      console.log('User:', user);
+      setCandidates(user);
+    };
+    fetchCandidates();
+  }, []);
+
+  // create function to save candidate to local storage
+  const saveCandidate = () => {
+    if (candidates.length === 0) return;
+
+    let parsedCandidates = [];
+    const storedCandidates = localStorage.getItem('savedCandidates');
+    if (storedCandidates) {
+      parsedCandidates = JSON.parse(storedCandidates);
+    }
+    parsedCandidates.push(candidates[0]);
+    localStorage.setItem('savedCandidates', JSON.stringify(parsedCandidates));
+    nextCandidate();
+  };
+
+  // create function to display next candidate card
+  const nextCandidate = () => {
+    if (candidates.length > 1) {
+      setCandidates(candidates.slice(1));
+    } else {
+      setCandidates([]);
+    }
+  };
+
+  //return the candidate search page
+  return (
+    <main>
+      <h1>Candidate Search</h1>
+      {candidates.length > 0 ? (
+        <CandidateCard candidate={candidates[0]} />
+      ) : (
+        <p>No more candidates to view, reload the page for more</p>
+      )}
+      <button onClick={saveCandidate}>Save Candidate</button>
+      <button onClick={nextCandidate}>Reject Candidate</button>
+    </main>
+  );
+
+
 };
 
 export default CandidateSearch;
