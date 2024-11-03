@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import { searchGithub, searchGithubUser } from '../api/API';
 import Candidate from '../interfaces/Candidate.interface';
 import CandidateCard from '../components/CandidateCard';
-
+import '../index.css';
 
 
 const CandidateSearch = () => {
@@ -12,7 +12,7 @@ const CandidateSearch = () => {
   useEffect(() => {
     const fetchCandidates = async () => {
       const data = await searchGithub();
-      const userInfo = await data.map((candidate: { login: string }) => searchGithubUser(candidate.login));
+      const userInfo = await data.map(async(candidate: { login: string }) => await searchGithubUser(candidate.login));
       console.log('User Info:', userInfo);
       const user = await Promise.all(userInfo);
       console.log('User:', user);
@@ -46,16 +46,18 @@ const CandidateSearch = () => {
 
   //return the candidate search page
   return (
-    <main>
+    <>
       <h1>Candidate Search</h1>
       {candidates.length > 0 ? (
         <CandidateCard candidate={candidates[0]} />
       ) : (
         <p>No more candidates to view, reload the page for more</p>
       )}
-      <button onClick={saveCandidate}>Save Candidate</button>
-      <button onClick={nextCandidate}>Reject Candidate</button>
-    </main>
+      <div style={{ display: 'flex', justifyContent: 'center', gap: '10px', marginTop: '20px' }}>
+        <button onClick={saveCandidate}>Save Candidate</button>
+        <button onClick={nextCandidate}>Reject Candidate</button>
+      </div>
+    </>
   );
 
 
