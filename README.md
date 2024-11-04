@@ -16,7 +16,26 @@ This project helped teach me how to use API calls in React to create a rsponsive
 
 
   ## Usage
-  When visiting the site users are presented with a random candidate from GitHub, which they can either reject, accept, or email directly.  When users wish to view potential candidates they may select the saved candidates tab where they can view, delete, or contact any saved candidate. These candidates are saved in local storage and will persist on page refresh.
+  When visiting the site users are presented with a random candidate from GitHub, which they can either reject, accept, or email directly. 
+  
+  
+  
+  ![cadidate 1](https://github.com/user-attachments/assets/3cc41d9d-e2c9-4529-a092-f00c19957b5b)            ![cadidate 2](https://github.com/user-attachments/assets/d14bcee5-bf19-4d84-b5fa-498639433caa)
+
+
+ 
+  
+  When users wish to view potential candidates they may select the saved candidates tab where they can view, delete, or contact any saved candidate. 
+  
+  
+  
+  ![cadidate nav](https://github.com/user-attachments/assets/4ece74c2-c7fa-4547-b7e4-4a21048819f9)
+
+  
+  ![cadidate saved](https://github.com/user-attachments/assets/8b230d47-58cf-4cb4-a0e9-26bdb1f36c08)
+
+  
+  These candidates are saved in local storage and will persist on page refresh.
 
   ## Link
   You can visit the site at: https://candidate-search-ux1w.onrender.com/
